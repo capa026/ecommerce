@@ -6,9 +6,20 @@ Ecommerce Project
 
 ### Technologies
 
-- React
-- MongoDB
-- Express
+- Frontend
+  - React
+  - Tailwind / Material UI
+
+- Backend
+  - Express
+  - nodemon
+  - dotenv
+  - cors
+  - mongodb
+  - mongoose
+
+- Database
+  - Mongo DB
 
 ## Authors
 
