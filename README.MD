@@ -7,10 +7,12 @@ Ecommerce Project
 ### Technologies
 
 - Frontend
+
   - React
-  - Tailwind / Material UI
+  - Material UI
 
 - Backend
+
   - Express
   - nodemon
   - dotenv
