@@ -5,8 +5,13 @@ export const register = async (req, res, next) => {
 
   try {
     const savedUser = await newUser.save();
-    res.status(200).send(savedUser);
+    const { name, lastName, email, phoneNumber } = savedUser._doc;
+    res.status(200).send({ name, lastName, email, phoneNumber });
   } catch (error) {
     next(error);
   }
+};
+
+export const login = async (req, res, next) => {
+  res.send("Login");
 };

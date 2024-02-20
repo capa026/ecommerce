@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
+import authRoutes from "./routes/auth.routes.js";
 const PORT = 8000;
 const app = express();
 dotenv.config(app);
@@ -19,6 +20,9 @@ const connect = async () => {
 //Middlewares
 app.use(cors());
 app.use(express.json());
+
+//Routes
+app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => {
   connect();
