@@ -56,3 +56,5 @@ Insert gif or link to demo
   - Integrate a secure payment gateway to handle online transactions.
 - Order Processing
   - Develop functionality to process orders, generate order confirmations, and handle inventory management.
+- Error codes
+  - Search for the eror codes and messages to show the user some generic feedback but not so specific information, just to show that an error happened
