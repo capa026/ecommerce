@@ -20,11 +20,15 @@ export const register = async (req, res, next) => {
 
     const token = await createAccesToken({ id: newUser._id });
     res.cookie("token", token);
-    res.json({ message: "User Created Successfully" });
-
-    //res.status(200).send("User created successfully");
+    res.status(200).json({
+      id: newUser._id,
+      name: newUser.name,
+      lastName: newUser.lastName,
+      email: newUser.email,
+      createdAt: newUser.createdAt,
+    });
   } catch (error) {
-    next(error);
+    res.status(500).json({ message: error });
   }
 };
 
@@ -32,30 +36,37 @@ export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
 
-    if (!user) return next("User not found");
+    if (!user)
+      return res.status(400).json({ message: "Password or Email incorrect" });
 
     const isPasswordCorrect = await bcrypt.compare(
-      user.password,
-      req.body.password
+      req.body.password,
+      user.password
     );
 
-    if (!isPasswordCorrect) return next("Incorrect Email or Password");
+    if (!isPasswordCorrect)
+      return res.status(400).json({ message: "Password or Email incorrect" });
 
-    jwt.sign(
-      { id: user._id },
-      "tokenpass",
-      {
-        expiresIn: "1d",
-      },
-      (err, token) => {
-        if (err) return next(err);
-        res.cookie("token", token);
-        res.json({ message: "User Created Successfully" });
-      }
-    );
+    const token = await createAccesToken({ id: user._id });
 
-    res.status(200).json(user);
+    res.cookie("token", token);
+    res.status(200).json({
+      id: user._id,
+      name: user.name,
+      lastName: user.lastName,
+      email: user.email,
+      createdAt: user.createdAt,
+    });
   } catch (error) {
-    next(error);
+    res.status(500).json({ message: error });
   }
+};
+
+export const logout = (req, res) => {
+  res.cookie("token", "", { expires: new Date(0) });
+  return res.sendStatus(200);
+};
+
+export const profile = (req, res) => {
+  res.send("profile");
 };
