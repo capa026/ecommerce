@@ -1,12 +1,19 @@
 import { Router } from "express";
 import { authRequired } from "../middlewares/validateToken.js";
+import {
+  createProduct,
+  deleteProduct,
+  getProduct,
+  getProducts,
+  updateProduct,
+} from "../controllers/products.controller.js";
 
 const router = Router();
 
-router.get("/products", authRequired);
-// router.get("/products/:id", authRequired);
-// router.post("/products", authRequired);
-// router.delete("/products/:id", authRequired);
-// router.put("/products/:id", authRequired);
+router.post("/", authRequired, createProduct);
+router.get("/:id", authRequired, getProduct);
+router.get("/", authRequired, getProducts);
+router.delete("/:id", authRequired, deleteProduct);
+router.put("/:id", authRequired, updateProduct);
 
 export default router;
