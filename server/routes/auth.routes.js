@@ -6,7 +6,7 @@ import {
   profile,
 } from "../controllers/auth.controller.js";
 
-import { authRequired } from "../controllers/validateToken.js";
+import { authRequired } from "../middlewares/validateToken.js";
 
 const router = express.Router();
 

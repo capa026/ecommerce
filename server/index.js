@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 
 import authRoutes from "./routes/auth.routes.js";
+import productsRoutes from "./routes/products.routes.js";
+
 const PORT = 8000;
 const app = express();
 dotenv.config(app);
@@ -25,6 +27,7 @@ app.use(cookieParser());
 
 //Routes
 app.use("/api/auth", authRoutes);
+app.use("/api", authRoutes);
 
 app.listen(PORT, () => {
   connect();
