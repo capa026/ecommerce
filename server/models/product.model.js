@@ -19,7 +19,7 @@ const productModel = new mongoose.Schema(
       required: true,
     },
     image: {
-      type: Buffer,
+      type: [Buffer],
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
