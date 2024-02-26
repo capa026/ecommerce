@@ -14,7 +14,7 @@ import {
 import { Visibility, VisibilityOff, LoginOutlined } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -62,10 +62,10 @@ const Login = () => {
         <Button variant="outlined">Login</Button>
         <hr />
         <Typography variant="h7" m={"auto"}>
-          Still without and account?{" "}
-          <Link to="/register">
-            <L>Register</L>
-          </Link>
+          Still without an account?{" "}
+          <NavLink to="/register">
+            <L component="span">Register</L>
+          </NavLink>
         </Typography>
       </Box>
     </Stack>

@@ -18,11 +18,11 @@ import {
 } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { register } = useForm();
+  const { register, handleSubmit } = useForm();
   return (
     <Stack justifyContent="center" alignItems="center" height="100vh">
       <Box
@@ -35,6 +35,9 @@ const Register = () => {
         borderRadius="8px"
         boxShadow="0 0 15px -3px black"
         width={{ xs: "80%", md: "40%" }}
+        onSubmit={handleSubmit((values) => {
+          console.log(values);
+        })}
       >
         <Stack
           fontSize="2rem"
@@ -45,9 +48,24 @@ const Register = () => {
           <Groups2Outlined fontSize="1rem" />
           Register
         </Stack>
-        <TextField label="First Name" variant="filled" fullWidth />
-        <TextField label="Last Name" variant="filled" fullWidth />
-        <TextField label="Email" variant="filled" fullWidth />
+        <TextField
+          label="First Name"
+          variant="filled"
+          fullWidth
+          {...register("firstName", { required: true })}
+        />
+        <TextField
+          label="Last Name"
+          variant="filled"
+          fullWidth
+          {...register("lastName", { required: true })}
+        />
+        <TextField
+          label="Email"
+          variant="filled"
+          fullWidth
+          {...register("email", { required: true })}
+        />
         <FormControl variant="filled" fullWidth>
           <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
           <FilledInput
@@ -64,9 +82,10 @@ const Register = () => {
                 </IconButton>
               </InputAdornment>
             }
+            {...register("password", { required: true })}
           />
         </FormControl>
-        <FormControl variant="filled" fullWidth>
+        {/* <FormControl variant="filled" fullWidth>
           <InputLabel htmlFor="filled-adornment-password">
             Confirm Password
           </InputLabel>
@@ -85,15 +104,17 @@ const Register = () => {
               </InputAdornment>
             }
           />
-        </FormControl>
+        </FormControl> */}
         <TextField label="Phone Number" variant="filled" fullWidth />
-        <Button variant="outlined">Register</Button>
+        <Button variant="outlined" type="submit">
+          Register
+        </Button>
         <hr />
         <Typography variant="h7" m={"auto"}>
           Already Registered?{" "}
-          <Link to="/login">
-            <L>Sign in</L>
-          </Link>
+          <NavLink to="/login">
+            <L component="span">Login</L>
+          </NavLink>
         </Typography>
       </Box>
     </Stack>
