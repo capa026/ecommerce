@@ -18,11 +18,19 @@ import {
 } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { registerRequest } from "../api/auth";
+
 const Register = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { register, handleSubmit } = useForm();
+
+  const onSubmit = handleSubmit(async (values) => {
+    await registerRequest(values);
+    navigate("/profile");
+  });
   return (
     <Stack justifyContent="center" alignItems="center" height="100vh">
       <Box
@@ -35,9 +43,7 @@ const Register = () => {
         borderRadius="8px"
         boxShadow="0 0 15px -3px black"
         width={{ xs: "80%", md: "40%" }}
-        onSubmit={handleSubmit((values) => {
-          console.log(values);
-        })}
+        onSubmit={onSubmit}
       >
         <Stack
           fontSize="2rem"
@@ -52,7 +58,7 @@ const Register = () => {
           label="First Name"
           variant="filled"
           fullWidth
-          {...register("firstName", { required: true })}
+          {...register("name", { required: true })}
         />
         <TextField
           label="Last Name"
@@ -105,7 +111,12 @@ const Register = () => {
             }
           />
         </FormControl> */}
-        <TextField label="Phone Number" variant="filled" fullWidth />
+        <TextField
+          label="Phone Number"
+          variant="filled"
+          fullWidth
+          {...register("phoneNumber", { required: true })}
+        />
         <Button variant="outlined" type="submit">
           Register
         </Button>
