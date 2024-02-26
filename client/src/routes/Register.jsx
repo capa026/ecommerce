@@ -19,18 +19,23 @@ import {
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { registerRequest } from "../api/auth";
+import { useAuth } from "../context/AuthContext";
 
 const Register = () => {
   const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const { register, handleSubmit } = useForm();
+  const { signup, user } = useAuth();
+
+  console.log(user);
 
   const onSubmit = handleSubmit(async (values) => {
-    await registerRequest(values);
-    navigate("/profile");
+    signup(values);
   });
+
   return (
     <Stack justifyContent="center" alignItems="center" height="100vh">
       <Box
