@@ -6,6 +6,9 @@ export const register = async (req, res, next) => {
   const { name, lastName, email, password, phoneNumber } = req.body;
 
   try {
+    const userFound = await User.findOne({ email });
+    if (userFound) return res.status(400).json(["The email already exists."]);
+
     const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
     const newUser = new User({
@@ -36,8 +39,7 @@ export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
 
-    if (!user)
-      return res.status(400).json({ message: "Password or Email incorrect" });
+    if (!user) return res.status(400).json(["Password or Email incorrect"]);
 
     const isPasswordCorrect = await bcrypt.compare(
       req.body.password,
@@ -45,7 +47,7 @@ export const login = async (req, res, next) => {
     );
 
     if (!isPasswordCorrect)
-      return res.status(400).json({ message: "Password or Email incorrect" });
+      return res.status(400).json(["Password or Email incorrect"]);
 
     const token = await createAccesToken({ id: user._id });
 

@@ -10,6 +10,7 @@ import {
   Button,
   Typography,
   Link as L,
+  Alert,
 } from "@mui/material";
 import {
   Groups2Outlined,
@@ -17,7 +18,7 @@ import {
   VisibilityOff,
 } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -27,10 +28,16 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { register, handleSubmit } = useForm();
-  const { signup, user } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { signup, isAuthenticated, errors: registerErrors } = useAuth();
 
-  console.log(user);
+  useEffect(() => {
+    if (isAuthenticated) navigate("/profile");
+  }, [isAuthenticated]);
 
   const onSubmit = handleSubmit(async (values) => {
     signup(values);
@@ -59,24 +66,53 @@ const Register = () => {
           <Groups2Outlined fontSize="1rem" />
           Register
         </Stack>
+        {registerErrors.map((error, i) => (
+          <Alert key={i} severity="error">
+            {error}
+          </Alert>
+        ))}
         <TextField
           label="First Name"
           variant="filled"
           fullWidth
           {...register("name", { required: true })}
         />
+        {errors.name && (
+          <Typography
+            variant="span"
+            sx={{ marginTop: "-15px", fontSize: "0.8rem", color: "red" }}
+          >
+            Name is required
+          </Typography>
+        )}
         <TextField
-          label="Last Name"
+          label="Last name"
           variant="filled"
           fullWidth
           {...register("lastName", { required: true })}
         />
+        {errors.lastName && (
+          <Typography
+            variant="span"
+            sx={{ marginTop: "-15px", fontSize: "0.8rem", color: "red" }}
+          >
+            Last name is required
+          </Typography>
+        )}
         <TextField
           label="Email"
           variant="filled"
           fullWidth
           {...register("email", { required: true })}
         />
+        {errors.email && (
+          <Typography
+            variant="span"
+            sx={{ marginTop: "-15px", fontSize: "0.8rem", color: "red" }}
+          >
+            Email is required
+          </Typography>
+        )}
         <FormControl variant="filled" fullWidth>
           <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
           <FilledInput
@@ -96,6 +132,14 @@ const Register = () => {
             {...register("password", { required: true })}
           />
         </FormControl>
+        {errors.password && (
+          <Typography
+            variant="span"
+            sx={{ marginTop: "-15px", fontSize: "0.8rem", color: "red" }}
+          >
+            Password is required
+          </Typography>
+        )}
         {/* <FormControl variant="filled" fullWidth>
           <InputLabel htmlFor="filled-adornment-password">
             Confirm Password
@@ -117,11 +161,19 @@ const Register = () => {
           />
         </FormControl> */}
         <TextField
-          label="Phone Number"
+          label="Phone number"
           variant="filled"
           fullWidth
           {...register("phoneNumber", { required: true })}
         />
+        {errors.phoneNumber && (
+          <Typography
+            variant="span"
+            sx={{ marginTop: "-15px", fontSize: "0.8rem", color: "red" }}
+          >
+            Phone number is required
+          </Typography>
+        )}
         <Button variant="outlined" type="submit">
           Register
         </Button>

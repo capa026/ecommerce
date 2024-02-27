@@ -15,12 +15,22 @@ import { Visibility, VisibilityOff, LoginOutlined } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [showPassword, setShowPassword] = useState(false);
 
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
   return (
     <Stack justifyContent="center" alignItems="center" height="100vh">
       <Box
+        onSubmit={onSubmit}
         component="form"
         display="flex"
         flexDirection="column"
@@ -40,7 +50,20 @@ const Login = () => {
           <LoginOutlined fontSize="1rem" />
           Login
         </Stack>
-        <TextField label="Email" variant="filled" fullWidth />
+        <TextField
+          label="Email"
+          variant="filled"
+          fullWidth
+          {...register("email", { required: true })}
+        />
+        {errors.email && (
+          <Typography
+            variant="span"
+            sx={{ marginTop: "-15px", fontSize: "0.8rem", color: "red" }}
+          >
+            Email is required
+          </Typography>
+        )}
         <FormControl variant="filled" fullWidth>
           <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
           <FilledInput
@@ -57,9 +80,20 @@ const Login = () => {
                 </IconButton>
               </InputAdornment>
             }
+            {...register("password", { required: true })}
           />
         </FormControl>
-        <Button variant="outlined">Login</Button>
+        {errors.password && (
+          <Typography
+            variant="span"
+            sx={{ marginTop: "-15px", fontSize: "0.8rem", color: "red" }}
+          >
+            Password is required
+          </Typography>
+        )}
+        <Button type="submit" variant="outlined">
+          Login
+        </Button>
         <hr />
         <Typography variant="h7" m={"auto"}>
           Still without an account?{" "}
