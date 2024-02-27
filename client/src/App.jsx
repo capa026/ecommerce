@@ -1,6 +1,6 @@
 import { Box, Container } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Register, Login } from "./routes";
+import { Register, Login, Home } from "./routes";
 import { AuthProvider } from "./context/AuthContext";
 const App = () => {
   return (
@@ -8,7 +8,7 @@ const App = () => {
       <BrowserRouter>
         <Container>
           <Routes>
-            <Route path="/" element={<Box>App</Box>} />
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/products" element={<Box>Products</Box>} />
