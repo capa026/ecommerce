@@ -9,12 +9,14 @@ import {
   TextField,
   Button,
   Typography,
+  Alert,
   Link as L,
 } from "@mui/material";
 import { Visibility, VisibilityOff, LoginOutlined } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const {
@@ -23,9 +25,10 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
+  const { signin, isAuthenticated, errors: loginErrors } = useAuth();
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    signin(data);
   });
   return (
     <Stack justifyContent="center" alignItems="center" height="100vh">
@@ -94,6 +97,11 @@ const Login = () => {
         <Button type="submit" variant="outlined">
           Login
         </Button>
+        {loginErrors.map((error, i) => (
+          <Alert key={i} severity="error">
+            {error}
+          </Alert>
+        ))}
         <hr />
         <Typography variant="h7" m={"auto"}>
           Still without an account?{" "}
