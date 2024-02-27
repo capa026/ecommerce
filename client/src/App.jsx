@@ -1,7 +1,9 @@
 import { Box, Container } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Register, Login, Home } from "./routes";
+import { Register, Login, Home, Profile } from "./routes";
 import { AuthProvider } from "./context/AuthContext";
+import CreateProduct from "./routes/CreateProduct";
+import ProtectedRoute from "./ProtectedRoute";
 const App = () => {
   return (
     <AuthProvider>
@@ -11,10 +13,13 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/products" element={<Box>Products</Box>} />
-            <Route path="/addProduct" element={<Box>Create Product</Box>} />
-            <Route path="/products/:id" element={<Box>Update Product</Box>} />
-            <Route path="/profile" element={<Box>Profile</Box>} />
+
+            <Route element={<ProtectedRoute />}>
+              <Route path="/products" element={<Box>Products</Box>} />
+              <Route path="/addProduct" element={<CreateProduct />} />
+              <Route path="/products/:id" element={<CreateProduct />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
           </Routes>
         </Container>
       </BrowserRouter>
