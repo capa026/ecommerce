@@ -15,10 +15,11 @@ import {
 import { Visibility, VisibilityOff, LoginOutlined } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -29,6 +30,7 @@ const Login = () => {
 
   const onSubmit = handleSubmit((data) => {
     signin(data);
+    navigate("/profile");
   });
   return (
     <Stack justifyContent="center" alignItems="center" height="100vh">

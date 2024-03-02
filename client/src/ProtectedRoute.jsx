@@ -4,9 +4,10 @@ import { useEffect } from "react";
 
 const ProtectedRoute = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
 
-  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (loading) return <h1>LOADING...</h1>;
+  if (!loading && !isAuthenticated) return <Navigate to="/login" replace />;
 
   return <Outlet />;
 };
