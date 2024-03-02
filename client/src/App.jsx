@@ -9,8 +9,8 @@ const App = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <Navbar />
         <Container>
-          <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
