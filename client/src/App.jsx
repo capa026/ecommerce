@@ -4,11 +4,13 @@ import { Register, Login, Home, Profile } from "./routes";
 import { AuthProvider } from "./context/AuthContext";
 import CreateProduct from "./routes/CreateProduct";
 import ProtectedRoute from "./ProtectedRoute";
+import Navbar from "./components/Navbar";
 const App = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Container>
+          <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
