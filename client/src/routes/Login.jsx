@@ -31,8 +31,10 @@ const Login = () => {
 
   const onSubmit = handleSubmit((data) => {
     signin(data);
-    navigate("/profile");
+    navigate("/");
   });
+
+  if (isAuthenticated) navigate("/");
   return (
     <>
       <LogoBar />

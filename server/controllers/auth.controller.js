@@ -54,6 +54,8 @@ export const login = async (req, res, next) => {
     const token = await createAccesToken({ id: user._id });
 
     res.cookie("token", token);
+    res.cookie("user_name", user.name, { httpOnly: true });
+    res.cookie("logged_in", "yes", { httpOnly: true });
     res.status(200).json({
       id: user._id,
       name: user.name,
@@ -104,4 +106,12 @@ export const verifyToken = async (req, res) => {
       email: userFound.email,
     });
   });
+};
+
+export const verifySession = (req, res, next) => {
+  const { logged_in, user_name } = req.cookies;
+
+  if (!logged_in || !user_name)
+    return res.status(401).json({ message: "Unauthorized." });
+  return res.json({ user_name, logged_in });
 };

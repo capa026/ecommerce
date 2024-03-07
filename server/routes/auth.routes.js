@@ -5,6 +5,7 @@ import {
   logout,
   profile,
   verifyToken,
+  verifySession,
 } from "../controllers/auth.controller.js";
 
 import { authRequired } from "../middlewares/validateToken.js";
@@ -13,6 +14,7 @@ import { validateSchema } from "../middlewares/validation.middleware.js";
 
 const router = express.Router();
 
+router.get("/verifySession", verifySession);
 router.post("/register", validateSchema(registerSchema), register);
 router.post("/login", validateSchema(loginSchema), login);
 router.post("/logout", logout);
