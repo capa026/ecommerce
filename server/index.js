@@ -3,9 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-import session from "express-session";
 import bodyParser from "body-parser";
-
 import authRoutes from "./routes/auth.routes.js";
 import productsRoutes from "./routes/products.routes.js";
 
@@ -27,16 +25,6 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
-
-app.use(
-  session({
-    key: "userId",
-    secret: "secret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { expires: 60 * 60 * 24 },
-  })
-);
 
 //Routes
 app.use("/api/auth", authRoutes);

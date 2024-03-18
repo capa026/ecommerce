@@ -31,7 +31,6 @@ const Login = () => {
 
   const onSubmit = handleSubmit((data) => {
     signin(data);
-    navigate("/");
   });
 
   if (isAuthenticated) navigate("/");
