@@ -3,7 +3,7 @@ import {
   registerRequest,
   loginRequest,
   verifyToken,
-  verifySession,
+  logout,
 } from "../api/auth";
 import Cookies from "js-cookie";
 
@@ -34,6 +34,13 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const logOut = async () => {
+    setIsAuthenticated(false);
+    setUser(null);
+    setLoading(false);
+    await logout();
+  };
+
   const signup = async (values) => {
     try {
       const res = await registerRequest(values);
@@ -53,6 +60,20 @@ export const AuthProvider = ({ children }) => {
       return () => clearTimeout(timer);
     }
   }, [errors]);
+
+  // useEffect(() => {
+  //   const lg = async () => {
+  //     const data = await getLogin();
+  //     if (data.data.loggedIn === true) {
+  //       console.log(data.data);
+  //       setUser(data.data.user);
+  //       setIsAuthenticated(true);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   lg();
+  // }, []);
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -90,6 +111,7 @@ export const AuthProvider = ({ children }) => {
         signup,
         signin,
         user,
+        logOut,
         userName,
         isAuthenticated,
         errors,

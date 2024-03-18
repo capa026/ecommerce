@@ -7,25 +7,23 @@ import ProtectedRoute from "./ProtectedRoute";
 import Navbar from "./components/Navbar";
 const App = () => {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Navbar />
-        <Container>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+    <BrowserRouter>
+      <Navbar />
+      <Container>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-            <Route element={<ProtectedRoute />}>
-              <Route path="/products" element={<Box>Products</Box>} />
-              <Route path="/addProduct" element={<CreateProduct />} />
-              <Route path="/products/:id" element={<CreateProduct />} />
-              <Route path="/profile" element={<Profile />} />
-            </Route>
-          </Routes>
-        </Container>
-      </BrowserRouter>
-    </AuthProvider>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/products" element={<Box>Products</Box>} />
+            <Route path="/addProduct" element={<CreateProduct />} />
+            <Route path="/products/:id" element={<CreateProduct />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+        </Routes>
+      </Container>
+    </BrowserRouter>
   );
 };
 

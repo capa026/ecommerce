@@ -16,8 +16,10 @@ import {
   AccountCircle,
   LibraryAdd,
   Login,
+  Logout,
   MenuOpen,
   MenuOutlined,
+  Settings,
   Store,
 } from "@mui/icons-material";
 import SearchBar from "./SearchBar";
@@ -28,7 +30,7 @@ import Cookies from "js-cookie";
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, userName, isAuthenticated } = useAuth();
+  const { user, logOut, isAuthenticated } = useAuth();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -42,6 +44,11 @@ const Navbar = () => {
   if (location.pathname === "/login" || location.pathname === "/register")
     return;
 
+  const handleLogout = () => {
+    console.log("logout");
+    logOut();
+    navigate("/");
+  };
   addEventListener("resize", () => {
     if (open) handleClose();
   });
@@ -68,7 +75,57 @@ const Navbar = () => {
 
           <SearchBar />
           <Box>
-            {!isAuthenticated ? (
+            {isAuthenticated ? (
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <LinkComponent to="/profile">
+                  <AccountCircle /> {user.name}
+                </LinkComponent>
+                <Box
+                  sx={{
+                    overflow: "hidden",
+                  }}
+                >
+                  <Button
+                    id="fade-button"
+                    onClick={handleClick}
+                    sx={{ minWidth: "0" }}
+                  >
+                    <Settings htmlColor="white" />
+                  </Button>
+                  <Menu
+                    id="fade-menu"
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                      "aria-labelledby": "fade-button",
+                    }}
+                    anchorEl={anchorEl}
+                    PaperProps={{ sx: { background: "#FF4000" } }}
+                    // anchorOrigin={{
+                    //   vertical: "top",
+                    //   horizontal: "left",
+                    // }}
+                    // transformOrigin={{
+                    //   vertical: "top",
+                    //   horizontal: "left",
+                    // }}
+                  >
+                    <MenuItem onClick={handleClose}>
+                      <Box
+                        sx={{ color: "#39393A !important" }}
+                        onClick={handleLogout}
+                      >
+                        <Logout /> Logout
+                      </Box>
+                    </MenuItem>
+                  </Menu>
+                </Box>
+              </Stack>
+            ) : (
               <>
                 <Stack
                   direction="row"
@@ -141,10 +198,6 @@ const Navbar = () => {
                   </Menu>
                 </Box>
               </>
-            ) : (
-              <LinkComponent to="/profile">
-                <AccountCircle /> {user.name}
-              </LinkComponent>
             )}
           </Box>
         </Stack>
