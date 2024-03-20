@@ -31,10 +31,8 @@ export const AuthProvider = ({ children }) => {
       setUser(res.data);
       setIsAuthenticated(true);
       localStorage.setItem("username", res.data.name);
-      console.log(res.data);
       navigate("/");
     } catch (error) {
-      console.log(error.response.data);
       setErrors(error.response.data);
     }
   };

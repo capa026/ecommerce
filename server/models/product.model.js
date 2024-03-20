@@ -21,6 +21,10 @@ const productModel = new mongoose.Schema(
     image: {
       type: [Buffer],
     },
+    categories: {
+      type: [String],
+      required: true,
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

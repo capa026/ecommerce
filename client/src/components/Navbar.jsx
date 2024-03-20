@@ -66,7 +66,6 @@ const Navbar = () => {
     return;
 
   const handleLogout = () => {
-    console.log("logout");
     logOut();
     navigate("/");
   };
@@ -91,7 +90,7 @@ const Navbar = () => {
           alignItems="center"
           gap="10px"
         >
-          <LinkComponent to="/">
+          <LinkComponent to="/" sx={{ fontSize: { xs: "0.8rem", sm: "1rem" } }}>
             <Store />
             eCOMMERCe
           </LinkComponent>
@@ -138,8 +137,21 @@ const Navbar = () => {
                       anchorEl={anchorEl}
                     >
                       <MenuItem onClick={handleClose}>
-                        <Box
+                        <LinkComponent
+                          to="/products"
                           sx={{ color: "white !important" }}
+                        >
+                          <AccountCircle /> Your Products
+                        </LinkComponent>
+                      </MenuItem>
+                      <MenuItem onClick={handleClose}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            color: "white !important",
+                            alignItems: "center",
+                            gap: "5px",
+                          }}
                           onClick={handleLogout}
                         >
                           <Logout /> Logout
@@ -179,7 +191,23 @@ const Navbar = () => {
                         <AccountCircle /> {username}
                       </LinkComponent>
                     </MenuItem>
-                    <MenuItem onClick={handleLogout} sx={{ color: "white" }}>
+                    <MenuItem onClick={handleClose2}>
+                      <LinkComponent
+                        to="/products"
+                        sx={{ color: "white !important", background: "red" }}
+                      >
+                        <AccountCircle /> Your Products
+                      </LinkComponent>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleLogout}
+                      sx={{
+                        display: "flex",
+                        color: "white !important",
+                        alignItems: "center",
+                        gap: "5px",
+                      }}
+                    >
                       <Logout /> Logout
                     </MenuItem>
                   </CustomMenu>
