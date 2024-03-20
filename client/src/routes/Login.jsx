@@ -33,7 +33,7 @@ const Login = () => {
     signin(data);
   });
 
-  if (isAuthenticated) navigate("/");
+  // if (isAuthenticated) navigate("/");
   return (
     <>
       <LogoBar />

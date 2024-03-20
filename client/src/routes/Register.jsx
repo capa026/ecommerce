@@ -36,10 +36,6 @@ const Register = () => {
   } = useForm();
   const { signup, isAuthenticated, errors: registerErrors } = useAuth();
 
-  useEffect(() => {
-    if (isAuthenticated) navigate("/profile");
-  }, [isAuthenticated]);
-
   const onSubmit = handleSubmit(async (values) => {
     signup(values);
   });

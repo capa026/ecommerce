@@ -25,20 +25,41 @@ import {
 import SearchBar from "./SearchBar";
 import LinkComponent from "./LinkComponent";
 import { useState } from "react";
-import Cookies from "js-cookie";
 
+const CustomMenu = styled(Menu)({
+  "& .MuiPaper-root": {
+    backgroundColor: "#eca400",
+    marginTop: "0.5rem",
+    marginLeft: "1.1rem",
+    borderRadius: 0,
+  },
+});
 const Navbar = () => {
+  const username = localStorage.getItem("username");
+
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logOut, isAuthenticated } = useAuth();
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl2, setAnchorEl2] = useState(null);
+
   const open = Boolean(anchorEl);
+  const open2 = Boolean(anchorEl2);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleClose2 = () => {
+    setAnchorEl2(null);
   };
 
   if (location.pathname === "/login" || location.pathname === "/register")
@@ -49,8 +70,10 @@ const Navbar = () => {
     logOut();
     navigate("/");
   };
+
   addEventListener("resize", () => {
     if (open) handleClose();
+    if (open2) handleClose2();
   });
 
   return (
@@ -75,54 +98,91 @@ const Navbar = () => {
 
           <SearchBar />
           <Box>
-            {isAuthenticated ? (
+            {username ? (
               <Stack
                 direction="row"
                 alignItems="center"
                 justifyContent="center"
               >
-                <LinkComponent to="/profile">
-                  <AccountCircle /> {user.name}
-                </LinkComponent>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="center"
+                  sx={{
+                    display: { xs: "none", sm: "flex" },
+                  }}
+                >
+                  <LinkComponent to="/profile">
+                    <AccountCircle /> {username}
+                  </LinkComponent>
+                  <Box
+                    sx={{
+                      display: { xs: "none", sm: "flex" },
+                      overflow: "hidden",
+                    }}
+                  >
+                    <Button
+                      id="fade-button"
+                      onClick={handleClick}
+                      sx={{ minWidth: "0" }}
+                    >
+                      <Settings htmlColor="white" />
+                    </Button>
+                    <CustomMenu
+                      id="fade-menu"
+                      open={open}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        "aria-labelledby": "fade-button",
+                      }}
+                      anchorEl={anchorEl}
+                    >
+                      <MenuItem onClick={handleClose}>
+                        <Box
+                          sx={{ color: "white !important" }}
+                          onClick={handleLogout}
+                        >
+                          <Logout /> Logout
+                        </Box>
+                      </MenuItem>
+                    </CustomMenu>
+                  </Box>
+                </Stack>
+                {/*  */}
                 <Box
                   sx={{
+                    display: { xs: "block", sm: "none" },
                     overflow: "hidden",
                   }}
                 >
                   <Button
                     id="fade-button"
-                    onClick={handleClick}
+                    onClick={handleClick2}
                     sx={{ minWidth: "0" }}
                   >
-                    <Settings htmlColor="white" />
+                    <MenuOutlined htmlColor="white" />
                   </Button>
-                  <Menu
+                  <CustomMenu
                     id="fade-menu"
-                    open={open}
-                    onClose={handleClose}
+                    open={open2}
+                    onClose={handleClose2}
                     MenuListProps={{
                       "aria-labelledby": "fade-button",
                     }}
-                    anchorEl={anchorEl}
-                    PaperProps={{ sx: { background: "#FF4000" } }}
-                    // anchorOrigin={{
-                    //   vertical: "top",
-                    //   horizontal: "left",
-                    // }}
-                    // transformOrigin={{
-                    //   vertical: "top",
-                    //   horizontal: "left",
-                    // }}
+                    anchorEl={anchorEl2}
                   >
-                    <MenuItem onClick={handleClose}>
-                      <Box
-                        sx={{ color: "#39393A !important" }}
-                        onClick={handleLogout}
+                    <MenuItem onClick={handleClose2}>
+                      <LinkComponent
+                        to="/profile"
+                        sx={{ color: "white !important" }}
                       >
-                        <Logout /> Logout
-                      </Box>
+                        <AccountCircle /> {username}
+                      </LinkComponent>
                     </MenuItem>
-                  </Menu>
+                    <MenuItem onClick={handleLogout} sx={{ color: "white" }}>
+                      <Logout /> Logout
+                    </MenuItem>
+                  </CustomMenu>
                 </Box>
               </Stack>
             ) : (
@@ -147,7 +207,6 @@ const Navbar = () => {
                     <LibraryAdd /> Register
                   </LinkComponent>
                 </Stack>
-
                 <Box
                   sx={{
                     display: { xs: "block", sm: "none" },
@@ -169,20 +228,12 @@ const Navbar = () => {
                       "aria-labelledby": "fade-button",
                     }}
                     anchorEl={anchorEl}
-                    PaperProps={{ sx: { background: "#FF4000" } }}
-                    // anchorOrigin={{
-                    //   vertical: "top",
-                    //   horizontal: "left",
-                    // }}
-                    // transformOrigin={{
-                    //   vertical: "top",
-                    //   horizontal: "left",
-                    // }}
+                    PaperProps={{ sx: { background: "#eca400" } }}
                   >
                     <MenuItem onClick={handleClose}>
                       <LinkComponent
                         to="/login"
-                        sx={{ color: "#39393A !important" }}
+                        sx={{ color: "white !important" }}
                       >
                         <Login /> Login
                       </LinkComponent>
@@ -190,7 +241,7 @@ const Navbar = () => {
                     <MenuItem onClick={handleClose}>
                       <LinkComponent
                         to="/register"
-                        sx={{ color: "#39393A !important" }}
+                        sx={{ color: "white !important" }}
                       >
                         <LibraryAdd /> Register
                       </LinkComponent>

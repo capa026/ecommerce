@@ -6,6 +6,7 @@ import {
   logout,
 } from "../api/auth";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -18,8 +19,8 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [userName, setUserName] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,6 +30,9 @@ export const AuthProvider = ({ children }) => {
       const res = await loginRequest(values);
       setUser(res.data);
       setIsAuthenticated(true);
+      localStorage.setItem("username", res.data.name);
+      console.log(res.data);
+      navigate("/");
     } catch (error) {
       console.log(error.response.data);
       setErrors(error.response.data);
@@ -39,6 +43,7 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     setUser(null);
     setLoading(false);
+    localStorage.removeItem("username");
     await logout();
   };
 
@@ -47,6 +52,7 @@ export const AuthProvider = ({ children }) => {
       const res = await registerRequest(values);
       setUser(res.data);
       setIsAuthenticated(true);
+      navigate("/login");
     } catch (error) {
       setErrors(error.response.data);
       console.log(error.response.data);
@@ -62,23 +68,10 @@ export const AuthProvider = ({ children }) => {
     }
   }, [errors]);
 
-  // useEffect(() => {
-  //   const lg = async () => {
-  //     const data = await getLogin();
-  //     if (data.data.loggedIn === true) {
-  //       console.log(data.data);
-  //       setUser(data.data.user);
-  //       setIsAuthenticated(true);
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   lg();
-  // }, []);
-
   useEffect(() => {
     const checkLogin = async () => {
       const cookies = Cookies.get();
+      const username = localStorage.getItem("username");
 
       if (cookies.token) {
         try {
@@ -87,6 +80,13 @@ export const AuthProvider = ({ children }) => {
           if (!res.data) {
             setIsAuthenticated(false);
             setLoading(false);
+          }
+
+          if (username) {
+            if (res.data.name !== username)
+              localStorage.setItem("username", res.data.name);
+          } else {
+            localStorage.setItem("username", res.data.name);
           }
 
           setIsAuthenticated(true);
@@ -113,7 +113,6 @@ export const AuthProvider = ({ children }) => {
         signin,
         user,
         logOut,
-        userName,
         isAuthenticated,
         errors,
         loading,

@@ -7,7 +7,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Navbar from "./components/Navbar";
 const App = () => {
   return (
-    <BrowserRouter>
+    <>
       <Navbar />
       <Container>
         <Routes>
@@ -23,7 +23,7 @@ const App = () => {
           </Route>
         </Routes>
       </Container>
-    </BrowserRouter>
+    </>
   );
 };
 
