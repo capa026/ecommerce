@@ -4,6 +4,7 @@ import {
   loginRequest,
   verifyToken,
   logout,
+  createProduct,
 } from "../api/auth";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
@@ -57,6 +58,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const newProduct = async (values) => {
+    try {
+      const res = await createProduct(values);
+    } catch (error) {
+      console.log(error.response.data);
+      setErrors(error.response.data);
+    }
+  };
+
   useEffect(() => {
     if (errors.length > 0) {
       const timer = setTimeout(() => {
@@ -97,6 +107,7 @@ export const AuthProvider = ({ children }) => {
           setLoading(false);
         }
       } else {
+        if (username) localStorage.removeItem("username");
         setLoading(false);
       }
     };
@@ -114,6 +125,7 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated,
         errors,
         loading,
+        newProduct,
       }}
     >
       {children}

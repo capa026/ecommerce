@@ -18,8 +18,8 @@ router.post(
   validateSchema(createProductSchema),
   createProduct
 );
-router.get("/:id", authRequired, getProduct);
-router.get("/", authRequired, getProducts);
+router.get("/:id", getProduct);
+router.get("/", getProducts);
 router.delete("/:id", authRequired, deleteProduct);
 router.put("/:id", authRequired, updateProduct);
 

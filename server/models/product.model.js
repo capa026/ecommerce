@@ -19,7 +19,8 @@ const productModel = new mongoose.Schema(
       required: true,
     },
     image: {
-      type: [Buffer],
+      // type: [Buffer],
+      type: [String],
     },
     categories: {
       type: [String],

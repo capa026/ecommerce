@@ -5,6 +5,7 @@ import { AuthProvider } from "./context/AuthContext";
 import CreateProduct from "./routes/CreateProduct";
 import ProtectedRoute from "./ProtectedRoute";
 import Navbar from "./components/Navbar";
+import ProductPage from "./routes/ProductPage";
 const App = () => {
   return (
     <>
@@ -14,11 +15,11 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/products/:id" element={<ProductPage />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/products" element={<Box>Products</Box>} />
             <Route path="/addProduct" element={<CreateProduct />} />
-            <Route path="/products/:id" element={<CreateProduct />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>

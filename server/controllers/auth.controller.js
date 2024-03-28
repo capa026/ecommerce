@@ -45,7 +45,7 @@ export const login = async (req, res, next) => {
 
     const token = await createAccesToken({ id: user._id });
 
-    res.cookie("token", token);
+    res.cookie("token", token, { maxAge: 28800000 }); //8 Hours
 
     res.status(200).json({
       id: user._id,
