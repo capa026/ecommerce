@@ -6,6 +6,7 @@ import CreateProduct from "./routes/CreateProduct";
 import ProtectedRoute from "./ProtectedRoute";
 import Navbar from "./components/Navbar";
 import ProductPage from "./routes/ProductPage";
+import ShopingCart from "./routes/ShopingCart";
 const App = () => {
   return (
     <>
@@ -21,6 +22,7 @@ const App = () => {
             <Route path="/products" element={<Box>Products</Box>} />
             <Route path="/addProduct" element={<CreateProduct />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/cart" element={<ShopingCart />} />
           </Route>
         </Routes>
       </Container>

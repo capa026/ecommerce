@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import authRoutes from "./routes/auth.routes.js";
 import productsRoutes from "./routes/products.routes.js";
+import cartRoutes from "./routes/cart.routes.js";
 
 const PORT = 8000;
 const app = express();
@@ -29,6 +30,7 @@ app.use(express.json());
 //Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productsRoutes);
+app.use("/api/cart", cartRoutes);
 
 app.listen(PORT, () => {
   connect();

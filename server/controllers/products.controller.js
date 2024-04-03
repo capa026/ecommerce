@@ -1,4 +1,5 @@
 import Product from "../models/product.model.js";
+import sCart from "../models/shoppingCart.model.js";
 
 export const createProduct = async (req, res) => {
   const { name, price, quantity, description, categories, image } = req.body;
@@ -65,6 +66,57 @@ export const updateProduct = async (req, res) => {
     if (!updatedProduct)
       return res.status(404).json({ message: "Product not found" });
     res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
+export const getShoppingCart = async (req, res) => {
+  try {
+    const cartFounded = await sCart.findOne({ userId: req.user.id });
+    if (!cartFounded) return res.status(200).json("No cart yet");
+    res.status(200).json(cartFounded);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
+export const createShopingCart = async (req, res) => {
+  const { userId, products } = req.body;
+  const newCart = new sCart({
+    userId: req.user.id,
+    products,
+  });
+  try {
+    const savedCart = await newCart.save();
+    res.status(200).json(savedCart);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
+export const updateShopingCart = async (req, res) => {
+  const { products } = req.body;
+  try {
+    const shoppingCart = await sCart.findOneAndUpdate(
+      { userId: req.user.id },
+      {
+        $set: {
+          products,
+        },
+      }
+    );
+
+    res.status(200).json(shoppingCart);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
+export const deleteShopingCart = async (req, res) => {
+  try {
+    const deleted = await sCart.deleteOne({ userId: req.user.id });
+    res.status(200).json(deleted);
   } catch (error) {
     res.status(500).json({ message: error });
   }

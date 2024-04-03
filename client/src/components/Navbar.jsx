@@ -11,6 +11,8 @@ import {
   Button,
   Menu,
   MenuItem,
+  IconButton,
+  Badge,
 } from "@mui/material";
 import {
   AccountCircle,
@@ -20,11 +22,13 @@ import {
   MenuOpen,
   MenuOutlined,
   Settings,
+  ShoppingCart,
   Store,
 } from "@mui/icons-material";
 import SearchBar from "./SearchBar";
 import LinkComponent from "./LinkComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useProducts } from "../context/ProductsContext";
 
 const CustomMenu = styled(Menu)({
   "& .MuiPaper-root": {
@@ -35,11 +39,12 @@ const CustomMenu = styled(Menu)({
   },
 });
 const Navbar = () => {
+  const { currentCart, getCart, trigger, deleteCart } = useProducts();
   const username = localStorage.getItem("username");
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, logOut, isAuthenticated } = useAuth();
+  const { logOut, isAuthenticated } = useAuth();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -61,6 +66,10 @@ const Navbar = () => {
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
+
+  useEffect(() => {
+    getCart();
+  }, [isAuthenticated, trigger]);
 
   if (location.pathname === "/login" || location.pathname === "/register")
     return;
@@ -102,7 +111,16 @@ const Navbar = () => {
                 direction="row"
                 alignItems="center"
                 justifyContent="center"
+                gap="10px"
               >
+                <Badge
+                  badgeContent={currentCart?.products?.length || 0}
+                  color="primary"
+                >
+                  <LinkComponent to="/cart">
+                    <ShoppingCart /> Cart
+                  </LinkComponent>
+                </Badge>
                 <Stack
                   direction="row"
                   alignItems="center"
@@ -114,6 +132,7 @@ const Navbar = () => {
                   <LinkComponent to="/profile">
                     <AccountCircle /> {username}
                   </LinkComponent>
+
                   <Box
                     sx={{
                       display: { xs: "none", sm: "flex" },
