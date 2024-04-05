@@ -15,9 +15,9 @@ const NavLink = styled(Link)(({ theme }) => ({
   },
 }));
 
-const LinkComponent = ({ children, sx, to }) => {
+const LinkComponent = ({ children, sx, to, onClick }) => {
   return (
-    <NavLink component={L} to={to} sx={sx}>
+    <NavLink component={L} to={to} sx={sx} onClick={onClick}>
       {children}
     </NavLink>
   );

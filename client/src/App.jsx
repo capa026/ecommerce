@@ -4,7 +4,7 @@ import { Register, Login, Home, Profile } from "./routes";
 import { AuthProvider } from "./context/AuthContext";
 import CreateProduct from "./routes/CreateProduct";
 import ProtectedRoute from "./ProtectedRoute";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar/Navbar";
 import ProductPage from "./routes/ProductPage";
 import ShopingCart from "./routes/ShopingCart";
 const App = () => {

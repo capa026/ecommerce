@@ -38,6 +38,7 @@ const CustomMenu = styled(Menu)({
     borderRadius: 0,
   },
 });
+
 const Navbar = () => {
   const { currentCart, getCart, trigger, deleteCart } = useProducts();
   const username = localStorage.getItem("username");
