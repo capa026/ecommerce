@@ -10,7 +10,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { Favorite, Share } from "@mui/icons-material";
+import { Favorite, LocalShipping, Share } from "@mui/icons-material";
 import { useProducts } from "../context/ProductsContext";
 
 const Product = ({ product }) => {
@@ -23,7 +23,7 @@ const Product = ({ product }) => {
   };
 
   return (
-    <Card sx={{ width: "300px" }} elevation={4}>
+    <Card sx={{ width: { xs: "150px", md: "200px" } }} elevation={4}>
       <Box
         onClick={handleClick}
         sx={{
@@ -32,8 +32,9 @@ const Product = ({ product }) => {
           "&:hover": {
             "& .hoverable": {
               background:
-                "linear-gradient(162deg, rgba(129,129,129,1) 0%, rgba(0,0,0,3) 71%)",
+                "linear-gradient(to right bottom, #23003b90, #25063b90, #270c3b90, #29123b90, #2b173b90, #29234d90, #20309090, #003e7190, #005b8d90, #00758b90, #008c6990, #069e2d90)",
               left: "0",
+              top: "0",
             },
           },
         }}
@@ -45,28 +46,40 @@ const Product = ({ product }) => {
           height="100%"
           zIndex={10}
           sx={{
-            left: "-100px",
+            left: "-200px",
+            top: "-140px",
             opacity: "0.5",
-            transition: ".3s",
+            transition: ".2s ease",
+            background: "transparent",
           }}
         ></Box>
-        <CardMedia sx={{ height: 140 }} image={image[0]} title="green iguana" />
+        <CardMedia sx={{ height: 140 }} image={image[0]} title={name} />
         <CardContent>
-          <Typography
-            variant="subtitle1"
-            component="div"
-            color="text.secondary"
-          >
+          <Typography fontSize="0.9rem" color="text.secondary">
             {name}
           </Typography>
-          <Typography variant="h6">{price}$</Typography>
+          <Typography variant="h6" fontSize="1.2rem">
+            {price}$
+          </Typography>
         </CardContent>
       </Box>
       <CardActions disableSpacing sx={{ justifyContent: "space-between" }}>
         <IconButton aria-label="add to favorites">
           <Favorite />
         </IconButton>
-        <Typography color="green">Free Shipping!</Typography>
+        <Typography
+          color="green"
+          fontSize={{ xs: "0.6rem", md: "0.8rem" }}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "5px",
+          }}
+        >
+          <LocalShipping fontSize="small" />
+          Envio Gratis!
+        </Typography>
         {/* <IconButton aria-label="share">
           <Share />
         </IconButton> */}
