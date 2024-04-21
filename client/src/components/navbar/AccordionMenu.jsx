@@ -9,8 +9,7 @@ import LinkComponent from "../LinkComponent";
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
-  background:
-    "linear-gradient(to right bottom, #23003b, #25063b, #270c3b, #29123b, #2b173b, #29234d, #203060, #003e71, #005b8d, #00758b, #008c69, #069e2d)",
+  background: theme.palette.primary.light,
   "&:not(:last-child)": {
     borderBottom: 0,
   },
@@ -19,24 +18,23 @@ const Accordion = styled((props) => (
   },
 }));
 
-const Summary = styled(AccordionSummary)({
+const Summary = styled(AccordionSummary)(({ theme }) => ({
   fontSize: "0.8rem",
   padding: "5px",
   minHeight: "0px",
-  background:
-    "linear-gradient(to right bottom, #23003b, #25063b, #270c3b, #29123b, #2b173b, #29234d, #203060, #003e71, #005b8d, #00758b, #008c69, #069e2d)",
+  background: theme.palette.primary.light,
   color: "white",
 
   "& .MuiAccordionSummary-content": {
     margin: 0,
   },
-});
+}));
 
-const Details = styled(AccordionDetails)({
+const Details = styled(AccordionDetails)(({ theme }) => ({
   minHeight: "0",
   color: "white",
   padding: "0",
-});
+}));
 
 const DetailsComponent = ({ links }) => {
   return (

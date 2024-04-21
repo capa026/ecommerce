@@ -12,14 +12,13 @@ import LinkComponent from "../LinkComponent";
 import { AccountCircle, LocalShipping, Logout } from "@mui/icons-material";
 import styled from "@emotion/styled";
 
-const CustomDrawer = styled(Drawer)({
+const CustomDrawer = styled(Drawer)(({ theme }) => ({
   display: { xs: "none !important", md: "flex !imortant" },
   "& .MuiDrawer-paper": {
-    background:
-      "linear-gradient(to right bottom, #23003b60, #25063b60, #270c3b60, #29123b60, #2b173b60, #29234d60, #20306060, #003e7160, #005b8d60, #00758b60, #008c6960, #069e2d60)",
+    background: theme.palette.primaryGradient.transparent,
     backdropFilter: "blur(8px)",
   },
-});
+}));
 
 const ItemList = ({ text, icon, handler, toggleDrawer }) => {
   const handleClick = () => {
@@ -34,7 +33,7 @@ const ItemList = ({ text, icon, handler, toggleDrawer }) => {
       <ListItem disablePadding onClick={handleClick} sx={{ color: "white" }}>
         <ListItemButton>
           <ListItemIcon sx={{ color: "white" }}>{icon}</ListItemIcon>
-          <ListItemText primary={text} />
+          {text}
         </ListItemButton>
       </ListItem>
     </LinkComponent>

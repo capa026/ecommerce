@@ -1,6 +1,7 @@
 import { Box, Divider, Stack } from "@mui/material";
 import DropdownMenu from "../DropdownMenu";
 import LinkComponent from "../LinkComponent";
+import { locateColor } from "../../Theme";
 
 const ItemComponent = ({ link, text, content }) => {
   return (
@@ -9,8 +10,7 @@ const ItemComponent = ({ link, text, content }) => {
         <DropdownMenu text={text}>
           <Stack
             sx={{
-              background:
-                "linear-gradient(to right bottom, #23003b, #25063b, #270c3b, #29123b, #2b173b, #29234d, #203060, #003e71, #005b8d, #00758b, #008c69, #069e2d)",
+              background: locateColor("primary.light"),
               color: "white",
               width: "150px",
               boxShadow: "0 0 10px 1px rgba(0, 0, 0, 0.8)",

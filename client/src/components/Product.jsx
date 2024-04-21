@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { Favorite, LocalShipping, Share } from "@mui/icons-material";
 import { useProducts } from "../context/ProductsContext";
+import { locateColor } from "../Theme";
 
 const Product = ({ product }) => {
   const { getProduct } = useProducts();
@@ -31,8 +32,7 @@ const Product = ({ product }) => {
           cursor: "pointer",
           "&:hover": {
             "& .hoverable": {
-              background:
-                "linear-gradient(to right bottom, #032B2880,#02474180,#032B2880)",
+              background: locateColor("primaryGradient.transparent"),
               left: "0",
               top: "0",
             },

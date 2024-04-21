@@ -10,6 +10,8 @@ export const theme = createTheme({
 
     primaryGradient: {
       main: "linear-gradient(to right bottom,#032B28,#024741,#195852,#032B28)",
+      transparent:
+        "linear-gradient(to right bottom,#032B2880,#02474180,#19585280,#032B2880)",
     },
   },
 });
