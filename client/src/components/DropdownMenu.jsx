@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "@mui/material/Button";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
@@ -6,10 +6,26 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
-import { Menu as IconMenu } from "@mui/icons-material";
-import { Box } from "@mui/material";
+import { Menu as IconMenu, KeyboardArrowDown } from "@mui/icons-material";
+import { Box, styled } from "@mui/material";
 
-export default function DropdownMenu({ children, isMenu }) {
+const Item = styled(Box)({
+  display: "flex",
+  cursor: "pointer",
+  userSelect: "none",
+  transition: ".3s",
+  padding: "0.3rem",
+  borderRadius: "8px",
+  fontSize: "0.7rem",
+  justifyContent: "center",
+  alignItems: "center",
+
+  "&:hover": {
+    backgroundColor: "rgba(255,255,255, 0.1)",
+  },
+});
+
+export default function DropdownMenu({ children, isMenu, text }) {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
 
@@ -45,9 +61,13 @@ export default function DropdownMenu({ children, isMenu }) {
     prevOpen.current = open;
   }, [open]);
 
+  addEventListener("resize", () => {
+    setOpen(false);
+  });
+
   return (
     <div>
-      {isMenu && (
+      {isMenu ? (
         <Box
           display={{ xs: "flex", md: "none" }}
           border="2px solid white"
@@ -63,6 +83,17 @@ export default function DropdownMenu({ children, isMenu }) {
         >
           <IconMenu fontSize="small" />
         </Box>
+      ) : (
+        <Item
+          ref={anchorRef}
+          id="composition-button"
+          aria-controls={open ? "composition-menu" : undefined}
+          aria-expanded={open ? "true" : undefined}
+          aria-haspopup="true"
+          onClick={handleToggle}
+        >
+          {text} <KeyboardArrowDown fontSize="small" />
+        </Item>
       )}
       <Popper
         open={open}

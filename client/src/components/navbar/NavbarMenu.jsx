@@ -1,37 +1,61 @@
-import styled from "@emotion/styled";
-import { KeyboardArrowDown } from "@mui/icons-material";
-import { Box, Stack } from "@mui/material";
+import { Box, Divider, Stack } from "@mui/material";
+import DropdownMenu from "../DropdownMenu";
+import LinkComponent from "../LinkComponent";
 
-const Item = styled(Box)({
-  display: "flex",
-  cursor: "pointer",
-  userSelect: "none",
-  transition: ".3s",
-  padding: "0.3rem",
-  borderRadius: "8px",
-  fontSize: "0.7rem",
-  justifyContent: "center",
-  alignItems: "center",
-
-  "&:hover": {
-    backgroundColor: "rgba(255,255,255, 0.1)",
-  },
-});
-
-const ItemComponent = ({ text }) => {
+const ItemComponent = ({ link, text, content }) => {
   return (
-    <Item>
-      {text} <KeyboardArrowDown fontSize="small" />
-    </Item>
+    <>
+      {!link ? (
+        <DropdownMenu text={text}>
+          <Stack
+            sx={{
+              background:
+                "linear-gradient(to right bottom, #23003b, #25063b, #270c3b, #29123b, #2b173b, #29234d, #203060, #003e71, #005b8d, #00758b, #008c69, #069e2d)",
+              color: "white",
+              width: "150px",
+              boxShadow: "0 0 10px 1px rgba(0, 0, 0, 0.8)",
+            }}
+          >
+            {content.map((item, i) => (
+              <Box key={item}>
+                <LinkComponent
+                  to={"/" + item.toLowerCase()}
+                  sx={{
+                    padding: "0.5rem !important",
+                    borderRadius: "0 !important",
+                  }}
+                >
+                  {item}
+                </LinkComponent>
+                {i < content.length - 1 && (
+                  <Divider sx={{ borderColor: "rgba(255,255,255,0.5)" }} />
+                )}
+              </Box>
+            ))}
+          </Stack>
+        </DropdownMenu>
+      ) : (
+        <LinkComponent to="/stores">{text}</LinkComponent>
+      )}
+    </>
   );
 };
 const NavbarMenu = ({ sx }) => {
   return (
     <Stack direction="row" justifyContent="center" gap="1rem" sx={sx}>
-      <ItemComponent text="Categorias " />
-      <ItemComponent text="Destacados" />
-      <ItemComponent text="Ofertas " />
-      <ItemComponent text="Tiendas " />
+      <ItemComponent
+        text="Categorias "
+        content={["Galletas", "Tortas", "Donas", "Frituras"]}
+      />
+      <ItemComponent
+        text="Destacados"
+        content={["Not ready yet...", "Not Ready yet..."]}
+      />
+      <ItemComponent text="Ofertas " content={["Diarias"]} />
+      <ItemComponent
+        text="Tiendas "
+        content={["Postres", "Comida Rapida", "Almuerzos"]}
+      />
     </Stack>
   );
 };

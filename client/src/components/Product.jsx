@@ -32,7 +32,7 @@ const Product = ({ product }) => {
           "&:hover": {
             "& .hoverable": {
               background:
-                "linear-gradient(to right bottom, #23003b90, #25063b90, #270c3b90, #29123b90, #2b173b90, #29234d90, #20309090, #003e7190, #005b8d90, #00758b90, #008c6990, #069e2d90)",
+                "linear-gradient(to right bottom, #032B2880,#02474180,#032B2880)",
               left: "0",
               top: "0",
             },

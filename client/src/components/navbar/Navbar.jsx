@@ -27,6 +27,7 @@ import NavbarDrawrMenu from "./NavbarDrawrMenu";
 import NavbarMenu from "./NavbarMenu";
 import CustomizedAccordions from "./AccordionMenu";
 import DropdownMenu from "../DropdownMenu";
+import { locateColor } from "../../Theme";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -79,8 +80,7 @@ const Navbar = () => {
       top={0}
       zIndex={100}
       sx={{
-        background:
-          "linear-gradient(to right bottom, #23003b, #25063b, #270c3b, #29123b, #2b173b, #29234d, #203060, #003e71, #005b8d, #00758b, #008c69, #069e2d)",
+        background: locateColor("primaryGradient"),
       }}
     >
       <Container fixed>
@@ -140,24 +140,6 @@ const Navbar = () => {
           <DropdownMenu isMenu={true}>
             <CustomizedAccordions />
           </DropdownMenu>
-
-          {/*<Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={openMenu}
-            onClose={handleCloseMenu}
-            sx={{
-              marginTop: "5px",
-              "& .MuiMenu-paper": {
-                background: "transparent",
-              },
-              "& .MuiMenu-list": {
-                padding: "0",
-              },
-            }}
-          >
-            <CustomizedAccordions />
-          </Menu>*/}
           <SearchBar />
         </Box>
         <Divider

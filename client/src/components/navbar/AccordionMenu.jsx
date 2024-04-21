@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { styled } from "@mui/material";
+import { Box, Divider, styled } from "@mui/material";
 import MuiAccordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import LinkComponent from "../LinkComponent";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
-  background: "transparent",
+  background:
+    "linear-gradient(to right bottom, #23003b, #25063b, #270c3b, #29123b, #2b173b, #29234d, #203060, #003e71, #005b8d, #00758b, #008c69, #069e2d)",
   "&:not(:last-child)": {
     borderBottom: 0,
   },
@@ -18,25 +20,58 @@ const Accordion = styled((props) => (
 }));
 
 const Summary = styled(AccordionSummary)({
+  fontSize: "0.8rem",
+  padding: "5px",
+  minHeight: "0px",
   background:
     "linear-gradient(to right bottom, #23003b, #25063b, #270c3b, #29123b, #2b173b, #29234d, #203060, #003e71, #005b8d, #00758b, #008c69, #069e2d)",
   color: "white",
-});
-const Details = styled(AccordionDetails)({
-  background:
-    "linear-gradient(to right bottom, #23003b60, #25063b60, #270c3b60, #29123b60, #2b173b60, #29234d60, #20306060, #003e7160, #005b8d60, #00758b60, #008c6960, #069e2d60)",
-  backdropFilter: "blur(8px)",
-  color: "white",
+
+  "& .MuiAccordionSummary-content": {
+    margin: 0,
+  },
 });
 
+const Details = styled(AccordionDetails)({
+  minHeight: "0",
+  color: "white",
+  padding: "0",
+});
+
+const DetailsComponent = ({ links }) => {
+  return (
+    <Details>
+      {links.map((item, i) => (
+        <Box key={item}>
+          <LinkComponent
+            to={"/" + item.toLowerCase()}
+            sx={{
+              padding: "0.5rem !important",
+              paddingLeft: "15px !important",
+              borderRadius: "0 !important",
+              background: "rgba(0,0,0,0.5)",
+            }}
+          >
+            {item}
+          </LinkComponent>
+          {i < links.length - 1 && (
+            <Divider sx={{ borderColor: "rgba(255,255,255,0.5)" }} />
+          )}
+        </Box>
+      ))}
+    </Details>
+  );
+};
+
 export default function AccordionUsage() {
-  const [expanded, setExpanded] = useState("panel1");
+  const [expanded, setExpanded] = useState("");
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
+
   return (
-    <div style={{ width: "270px" }}>
+    <Box sx={{ width: "200px", boxShadow: "0 0 10px 1px rgba(0,0,0,0.5)" }}>
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
@@ -48,7 +83,7 @@ export default function AccordionUsage() {
         >
           Categorias
         </Summary>
-        <Details>LINKS</Details>
+        <DetailsComponent links={["Galletas", "Tortas", "Donas", "Frituras"]} />
       </Accordion>
       <Accordion
         expanded={expanded === "panel2"}
@@ -59,9 +94,9 @@ export default function AccordionUsage() {
           aria-controls="panel2-content"
           id="panel2-header"
         >
-          Ofertas
+          Destacados
         </Summary>
-        <Details>LINKS</Details>
+        <DetailsComponent links={["Not ready yet...", "Not Ready yet..."]} />
       </Accordion>
       <Accordion
         expanded={expanded === "panel3"}
@@ -72,9 +107,9 @@ export default function AccordionUsage() {
           aria-controls="panel3-content"
           id="panel3-header"
         >
-          Destacados
+          Ofertas
         </Summary>
-        <Details>LINKS</Details>
+        <DetailsComponent links={["Diarias"]} />
       </Accordion>
       <Accordion
         expanded={expanded === "panel4"}
@@ -82,13 +117,13 @@ export default function AccordionUsage() {
       >
         <Summary
           expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
-          aria-controls="panel3-content"
-          id="panel3-header"
+          aria-controls="panel4-content"
+          id="panel4-header"
         >
           Tiendas
         </Summary>
-        <Details>LINKS</Details>
+        <DetailsComponent links={["Postres", "Comida Rapida", "Almuerzos"]} />
       </Accordion>
-    </div>
+    </Box>
   );
 }

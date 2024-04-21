@@ -20,6 +20,7 @@ const CustomDrawer = styled(Drawer)({
     backdropFilter: "blur(8px)",
   },
 });
+
 const ItemList = ({ text, icon, handler, toggleDrawer }) => {
   const handleClick = () => {
     handler();
