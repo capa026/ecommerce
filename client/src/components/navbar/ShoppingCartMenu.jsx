@@ -4,6 +4,7 @@ import {
   Button,
   CardMedia,
   Divider,
+  IconButton,
   Stack,
   Typography,
 } from "@mui/material";
@@ -20,7 +21,7 @@ export const ShoppingCartMenu = ({ closeMenu }) => {
   let totalValueOfCart = 0;
   currentCart?.products?.forEach((product) => {
     totalValueOfCart += parseFloat(
-      (product.quantity * product.product.price).toFixed(2)
+      (product.quantity * product.product.price).toFixed(1)
     );
   });
 
@@ -47,20 +48,34 @@ export const ShoppingCartMenu = ({ closeMenu }) => {
         gap: "5px",
       }}
     >
-      <Box
-        sx={{
-          display: "grid",
-          placeItems: "center",
-          ml: "auto",
-          bgcolor: "primary.main",
-          borderRadius: "4px",
-          userSelect: "none",
-          cursor: "pointer",
-        }}
-        onClick={closeMenu}
-      >
-        <Clear sx={{ color: "bg.main" }} />
-      </Box>
+      <Stack direction="row" justifyContent="center">
+        {currentCart.products ? (
+          <Typography
+            variant="body1"
+            color="primary"
+            align="center"
+            width="100%"
+          >
+            Cantidad de productos: <b>{currentCart.products.length}</b>
+          </Typography>
+        ) : (
+          <Typography>Shopping Cart</Typography>
+        )}
+        <Box
+          sx={{
+            display: "grid",
+            placeItems: "center",
+            ml: "auto",
+            bgcolor: "primary.main",
+            borderRadius: "4px",
+            userSelect: "none",
+            cursor: "pointer",
+          }}
+          onClick={closeMenu}
+        >
+          <Clear sx={{ color: "bg.main" }} />
+        </Box>
+      </Stack>
 
       <Divider />
 
@@ -69,18 +84,25 @@ export const ShoppingCartMenu = ({ closeMenu }) => {
       ) : (
         <>
           {currentCart?.products?.map((product, i) => (
+            // Product
             <Stack
               key={i}
               direction="row"
-              position="relative"
               alignItems="center"
+              borderBottom="1px solid rgba(0,0,0,0.2)"
+              pb="0.3rem"
             >
+              {/* Delete product */}
               <Box
                 onClick={() => handleDelete("deleteOne", i)}
                 sx={{ display: "grid", placeItems: "center" }}
               >
-                <Clear />
+                <IconButton size="small">
+                  <Clear fontSize="small" />
+                </IconButton>
               </Box>
+
+              {/* Product picture */}
               <Stack alignItems="center" flex={2}>
                 <CardMedia
                   sx={{
@@ -88,37 +110,49 @@ export const ShoppingCartMenu = ({ closeMenu }) => {
                     objectFit: "center",
                     borderRadius: "50%",
                     aspectRatio: "1 / 1",
+                    boxShadow: 4,
                   }}
                   component="img"
                   image={product.product.image[0]}
                 />
               </Stack>
 
-              <Stack
-                flex={3}
-                alignItems="center"
-                justifyContent="center"
-                bgcolor="red"
-              >
-                <Typography>{product.product.name}</Typography>
-                <Typography>{product.product.price}$</Typography>
-                <Typography>
-                  Total: {(product.quantity * product.product.price).toFixed(2)}
-                  $
+              {/* Product Description */}
+              <Stack flex={3} borderRight="1px solid rgba(0,0,0,0.3)" pl="5px">
+                <Typography variant="body1">
+                  <b>{product.product.name}</b>
+                </Typography>
+                <Typography variant="body2" color="primary.lighter">
+                  {product.product.price}$
                 </Typography>
               </Stack>
 
-              <Stack
-                alignItems="center"
-                justifyContent="center"
-                flex={2}
-                direction="row"
-              >
+              {/* Increase, Decrease Product */}
+              <Stack alignItems="center" justifyContent="center" flex={2}>
+                <Typography variant="subtitle1" color="primary.light">
+                  <b>
+                    {(product.quantity * product.product.price).toFixed(2)}$
+                  </b>
+                </Typography>
                 <Typography>{product.quantity}</Typography>
               </Stack>
             </Stack>
           ))}
         </>
+      )}
+      {currentCart.products && (
+        <Button
+          variant="contained"
+          sx={{
+            display: "flex",
+            gap: "5px",
+            alignItems: "center",
+            m: "0.5rem",
+          }}
+        >
+          <Box fontWeight="bold">${totalValueOfCart}</Box>
+          <Box fontWeight="100">- Comprar</Box>
+        </Button>
       )}
     </Stack>
   );
