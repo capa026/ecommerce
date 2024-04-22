@@ -40,7 +40,7 @@ export const ShoppingCartMenu = ({ closeMenu }) => {
   return (
     <Stack
       sx={{
-        width: "300px",
+        width: "350px",
         padding: "5px",
         background: locateColor("bg"),
         borderRadius: "0 0 4px 4px",
