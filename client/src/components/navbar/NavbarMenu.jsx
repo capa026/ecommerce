@@ -3,19 +3,26 @@ import DropdownMenu from "../DropdownMenu";
 import LinkComponent from "../LinkComponent";
 import { locateColor } from "../../Theme";
 
+const StackMenu = ({ closeMenu, children }) => {
+  return (
+    <Stack
+      sx={{
+        background: locateColor("primary.light"),
+        color: "white",
+        width: "150px",
+        boxShadow: "0 0 10px 1px rgba(0, 0, 0, 0.8)",
+      }}
+    >
+      {children}
+    </Stack>
+  );
+};
 const ItemComponent = ({ link, text, content }) => {
   return (
     <>
       {!link ? (
         <DropdownMenu text={text}>
-          <Stack
-            sx={{
-              background: locateColor("primary.light"),
-              color: "white",
-              width: "150px",
-              boxShadow: "0 0 10px 1px rgba(0, 0, 0, 0.8)",
-            }}
-          >
+          <StackMenu>
             {content.map((item, i) => (
               <Box key={item}>
                 <LinkComponent
@@ -32,7 +39,7 @@ const ItemComponent = ({ link, text, content }) => {
                 )}
               </Box>
             ))}
-          </Stack>
+          </StackMenu>
         </DropdownMenu>
       ) : (
         <LinkComponent to="/stores">{text}</LinkComponent>

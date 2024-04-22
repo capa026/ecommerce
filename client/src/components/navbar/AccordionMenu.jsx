@@ -61,7 +61,7 @@ const DetailsComponent = ({ links }) => {
   );
 };
 
-export default function AccordionUsage() {
+export default function AccordionUsage({ closeMenu }) {
   const [expanded, setExpanded] = useState("");
 
   const handleChange = (panel) => (event, newExpanded) => {

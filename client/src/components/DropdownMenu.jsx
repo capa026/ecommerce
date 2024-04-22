@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { Children, cloneElement, useEffect, useRef, useState } from "react";
 import Button from "@mui/material/Button";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
@@ -6,8 +6,13 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
-import { Menu as IconMenu, KeyboardArrowDown } from "@mui/icons-material";
-import { Box, styled } from "@mui/material";
+import {
+  Menu as IconMenu,
+  KeyboardArrowDown,
+  ShoppingCart,
+} from "@mui/icons-material";
+import { Badge, Box, styled } from "@mui/material";
+import LinkComponent from "./LinkComponent";
 
 const Item = styled(Box)({
   display: "flex",
@@ -25,9 +30,23 @@ const Item = styled(Box)({
   },
 });
 
-export default function DropdownMenu({ children, isMenu, text }) {
+export default function DropdownMenu({
+  children,
+  isMenu,
+  text,
+  wBadge,
+  currentCart,
+  placement,
+}) {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
+
+  const closeMenu = () => setOpen(false);
+
+  const modifiedChildren = Children.map(children, (child) => {
+    // Clone the child element and pass additional props
+    return cloneElement(child, { closeMenu });
+  });
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -62,7 +81,7 @@ export default function DropdownMenu({ children, isMenu, text }) {
   }, [open]);
 
   addEventListener("resize", () => {
-    setOpen(false);
+    closeMenu();
   });
 
   return (
@@ -83,6 +102,22 @@ export default function DropdownMenu({ children, isMenu, text }) {
         >
           <IconMenu fontSize="small" />
         </Box>
+      ) : wBadge ? (
+        <Badge
+          badgeContent={currentCart?.products?.length || 0}
+          color="primary"
+        >
+          <Item
+            ref={anchorRef}
+            id="composition-button"
+            aria-controls={open ? "composition-menu" : undefined}
+            aria-expanded={open ? "true" : undefined}
+            aria-haspopup="true"
+            onClick={handleToggle}
+          >
+            <ShoppingCart fontSize="small" /> {text}
+          </Item>
+        </Badge>
       ) : (
         <Item
           ref={anchorRef}
@@ -92,24 +127,27 @@ export default function DropdownMenu({ children, isMenu, text }) {
           aria-haspopup="true"
           onClick={handleToggle}
         >
-          {text} <KeyboardArrowDown fontSize="small" />
+          {text}
+          <KeyboardArrowDown fontSize="small" />
         </Item>
       )}
+
       <Popper
         open={open}
         anchorEl={anchorRef.current}
         role={undefined}
-        placement="bottom-start"
+        placement={placement || "bottom-start"}
         transition
         disablePortal
+        sx={{ zIndex: 1000 }}
       >
         {({ TransitionProps, placement }) => (
           <Grow
             {...TransitionProps}
-            style={{
-              transformOrigin:
-                placement === "bottom-start" ? "left top" : "left bottom",
-            }}
+            // style={{
+            //   transformOrigin:
+            //     placement === "bottom-start" ? "left top" : "left bottom",
+            // }}
           >
             <Paper sx={{ background: "none" }} elevation={0}>
               <ClickAwayListener onClickAway={handleClose}>
@@ -119,7 +157,7 @@ export default function DropdownMenu({ children, isMenu, text }) {
                   aria-labelledby="composition-button"
                   onKeyDown={handleListKeyDown}
                 >
-                  {children}
+                  {modifiedChildren}
                 </MenuList>
               </ClickAwayListener>
             </Paper>

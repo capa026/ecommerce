@@ -13,6 +13,10 @@ export const theme = createTheme({
       transparent:
         "linear-gradient(to right bottom,#032B2880,#02474180,#19585280,#032B2880)",
     },
+
+    bg: {
+      main: "#DCDCDC",
+    },
   },
 });
 

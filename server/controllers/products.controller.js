@@ -82,7 +82,7 @@ export const getShoppingCart = async (req, res) => {
 };
 
 export const createShopingCart = async (req, res) => {
-  const { userId, products } = req.body;
+  const { products } = req.body;
   const newCart = new sCart({
     userId: req.user.id,
     products,

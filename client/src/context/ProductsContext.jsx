@@ -30,7 +30,6 @@ export const ProductsProvider = ({ children }) => {
     try {
       const res = await getCartRequest();
       setCurrentCart(res.data);
-      setTrigger(!trigger);
     } catch (error) {
       setError(error.response.data);
     }

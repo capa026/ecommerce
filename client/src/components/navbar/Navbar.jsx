@@ -28,6 +28,7 @@ import NavbarMenu from "./NavbarMenu";
 import CustomizedAccordions from "./AccordionMenu";
 import DropdownMenu from "../DropdownMenu";
 import { locateColor } from "../../Theme";
+import { ShoppingCartMenu } from "./ShoppingCartMenu";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -102,14 +103,15 @@ const Navbar = () => {
           {username ? (
             <Stack direction="row" gap="5px">
               {/*If there is a user Logged in*/}
-              <Badge
-                badgeContent={currentCart?.products?.length || 0}
-                color="primary"
+              <DropdownMenu
+                wBadge={true}
+                text="Cart"
+                currentCart={currentCart}
+                placement="bottom"
               >
-                <LinkComponent to="/cart">
-                  <ShoppingCart fontSize="small" /> Cart
-                </LinkComponent>
-              </Badge>
+                <ShoppingCartMenu />
+              </DropdownMenu>
+
               <LinkComponent to="#" onClick={() => toggleDrawer(true)}>
                 <AccountCircle fontSize="small" /> {username}
               </LinkComponent>
