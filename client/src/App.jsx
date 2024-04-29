@@ -1,12 +1,10 @@
 import { Box, Container, ThemeProvider, createTheme } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Register, Login, Home, Profile } from "./routes";
+import { Register, Login, Home, Profile, ProductPage } from "./routes";
 import { AuthProvider } from "./context/AuthContext";
 import CreateProduct from "./routes/CreateProduct";
 import ProtectedRoute from "./ProtectedRoute";
 import Navbar from "./components/navbar/Navbar";
-import ProductPage from "./routes/ProductPage";
-import ShopingCart from "./routes/ShopingCart";
 import { theme } from "./Theme";
 
 const App = () => {
@@ -25,7 +23,6 @@ const App = () => {
               <Route path="/products" element={<Box>Products</Box>} />
               <Route path="/addProduct" element={<CreateProduct />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/cart" element={<ShopingCart />} />
             </Route>
           </Routes>
         </Container>

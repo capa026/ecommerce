@@ -12,7 +12,7 @@ const NavLink = styled(Link)(({ theme }) => ({
   borderRadius: "8px",
   fontSize: ".8rem",
   "&:hover": {
-    backgroundColor: "rgba(255,255,255, 0.1)",
+    background: "rgba(255,255,255, 0.1)",
   },
 }));
 

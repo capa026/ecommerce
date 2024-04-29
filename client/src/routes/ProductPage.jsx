@@ -25,32 +25,18 @@ import {
   LoginOutlined,
 } from "@mui/icons-material";
 import { useAuth } from "../context/AuthContext";
+import IncreaseDecreaseAmount from "../components/IncreaseDecreaseAmount";
 
 const ProductPage = () => {
   const { currentProduct, getProduct, handleCart } = useProducts();
   const username = localStorage.getItem("username");
   const [productsAmount, setProductsAmount] = useState(1);
+
   const params = useParams();
 
   useEffect(() => {
     getProduct(params.id);
-  }, []);
-
-  const handleArrow = (action) => {
-    if (action === "+" && productsAmount < currentProduct.quantity)
-      setProductsAmount(productsAmount + 1);
-    if (action === "-" && productsAmount > 1)
-      setProductsAmount(productsAmount - 1);
-  };
-
-  const handleAmountChange = (e) => {
-    if (isNaN(e.target.value)) return;
-    setProductsAmount(
-      parseInt(e.target.value) > currentProduct.quantity
-        ? currentProduct.quantity
-        : 1
-    );
-  };
+  }, [params.id]);
 
   if (!currentProduct) return <SkeletonLoading />;
 
@@ -80,24 +66,11 @@ const ProductPage = () => {
           <Typography>{currentProduct.price}$</Typography>
         </CardContent>
 
-        <Stack direction="row" justifyContent="center">
-          <IconButton onClick={() => handleArrow("-")}>
-            <ArrowCircleLeft sx={{ fontSize: "3rem" }} />
-          </IconButton>
-
-          <TextField
-            id="outlined-basic"
-            variant="outlined"
-            sx={{ width: "100px" }}
-            onChange={handleAmountChange}
-            value={productsAmount}
-            inputProps={{ sx: { textAlign: "center", fontSize: "1.3rem" } }}
-          />
-
-          <IconButton onClick={() => handleArrow("+")}>
-            <ArrowCircleRight sx={{ fontSize: "3rem" }} />
-          </IconButton>
-        </Stack>
+        <IncreaseDecreaseAmount
+          currentProduct={currentProduct}
+          productsAmount={productsAmount}
+          setProductsAmount={setProductsAmount}
+        />
 
         {!username ? (
           <Stack alignItems="center" mt="10px" gap="10px">

@@ -12,6 +12,7 @@ import LinkComponent from "../LinkComponent";
 import { Clear, DeleteForever, ShoppingCart } from "@mui/icons-material";
 import { locateColor } from "../../Theme";
 import { useProducts } from "../../context/ProductsContext";
+import IncreaseDecreaseAmount from "../IncreaseDecreaseAmount";
 
 export const ShoppingCartMenu = ({ closeMenu }) => {
   const { currentCart, updateCart, trigger, deleteCart } = useProducts();
@@ -119,9 +120,20 @@ export const ShoppingCartMenu = ({ closeMenu }) => {
 
               {/* Product Description */}
               <Stack flex={3} borderRight="1px solid rgba(0,0,0,0.3)" pl="5px">
-                <Typography variant="body1">
+                <LinkComponent
+                  to={`products/${product.product._id}`}
+                  sx={{
+                    color: "black !important",
+                    p: "5px 0 !important",
+                    borderRadius: "0 !important",
+                    "&:hover": {
+                      background: "rgba(0,0,0,0.1) !important",
+                      paddingLeft: "0.5rem !important",
+                    },
+                  }}
+                >
                   <b>{product.product.name}</b>
-                </Typography>
+                </LinkComponent>
                 <Typography variant="body2" color="primary.lighter">
                   {product.product.price}$
                 </Typography>
@@ -134,7 +146,7 @@ export const ShoppingCartMenu = ({ closeMenu }) => {
                     {(product.quantity * product.product.price).toFixed(2)}$
                   </b>
                 </Typography>
-                <Typography>{product.quantity}</Typography>
+                <IncreaseDecreaseAmount currentProduct={product} />
               </Stack>
             </Stack>
           ))}
